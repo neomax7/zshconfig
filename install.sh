@@ -55,7 +55,7 @@ sed -i 's/ZSH_THEME\=\"robbyrussell\"/ZSH_THEME\=\"powerlevel10k\/powerlevel10k\
 ### apply plugins
 if [[ $OS = 'MAC' ]]
 then
-   sed -i 's/plugins=(git)/plugins=(git dirhistory zsh-syntax-highlighting zsh-autosuggestions zsh-completions zsh-history-substring-search mac-zsh-completions macos)/' $HOME/.zshrc
+   sed -i 's/plugins=(git)/plugins=(git dirhistory zsh-syntax-highlighting zsh-autosuggestions zsh-completions zsh-history-substring-search mac-zsh-completions gnu-utils xcode macos thefuck gpg-agent )/' $HOME/.zshrc
 else
-   sed -i 's/plugins=(git)/plugins=(git dirhistory zsh-syntax-highlighting zsh-autosuggestions zsh-completions zsh-history-substring-search systemd firewalld)/' $HOME/.zshrc
+   sed -i 's/plugins=(git)/plugins=(git dirhistory zsh-syntax-highlighting zsh-autosuggestions zsh-completions zsh-history-substring-search systemd firewalld thefuck gpg-agent)/' $HOME/.zshrc
 fi
