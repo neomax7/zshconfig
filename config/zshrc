@@ -107,6 +107,11 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+# alias for batcat (debian)
+if [[ -e /usr/bin/batcat ]];then
+	alias bat=batcat
+fi
+
 # my alias
 alias ls="lsd"
 alias cat="bat -pp"
