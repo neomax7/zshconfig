@@ -20,15 +20,16 @@ fi
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 ### check if its mac
-if [[ $(uname -s) = "Darwin" ]]
-then
+case $(uname) in
+Darwin)
   echo "OS:Mac";
   OS=MAC;
-elif [[ $(uname -s) = "Linux" ]]
-then
+;;
+Linux)
   echo "OS:Linux";
   OS=LINUX;
-fi
+;;
+esac
 
 ### install custom themes
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k

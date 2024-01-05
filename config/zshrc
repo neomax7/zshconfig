@@ -77,7 +77,25 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git dirhistory zsh-syntax-highlighting zsh-autosuggestions zsh-completions zsh-history-substring-search systemd firewalld gpg-agent nvm thefuck)
+
+## check OS
+case $(uname) in
+Linux)
+  OS=LINUX;
+;;
+Darwin)
+  OS=MAC;
+;;
+esac
+
+case $OS in
+LINUX)
+  plugins=(git dirhistory zsh-syntax-highlighting zsh-autosuggestions zsh-completions zsh-history-substring-search systemd firewalld podman gpg-agent nvm thefuck)
+;;
+MAC)
+  plugins=(git dirhistory zsh-syntax-highlighting zsh-autosuggestions zsh-completions zsh-history-substring-search gnu-utils xcode macos podman gpg-agent nvm thefuck)
+;;
+esac
 
 source $ZSH/oh-my-zsh.sh
 
@@ -117,6 +135,29 @@ alias ls="lsd"
 alias cat="bat -pp"
 alias l='ls -alFh'
 alias ll='ls -lFh'
+
+case $OS in
+MAC)
+  ### my mac keybind
+  bindkey '\033[1;2D' backward-word
+  bindkey '\033[1;2C' forward-word
+
+  ## my_PATH
+  export PATH=/opt/homebrew/opt/ruby/bin:$PATH # ruby bin
+  export PATH=/opt/homebrew/opt/curl/bin:$PATH # gnu curl
+  export PATH=$JAVA_HOME/bin:$PATH # java bin
+
+  ## my_env
+  export EDITOR=nano
+  export PAGER=most
+
+  # Docker support for Podman
+  export DOCKER_HOST="unix://$(podman machine inspect| jq '.[].ConnectionInfo.PodmanSocket.Path' | tr -d '"')"
+;;
+LINUX)
+  # Docker support for Podman
+  export DOCKER_HOST="unix://$XDG_RUNTIME_DIR/podman/podman.sock"
+esac
 
 # my env
 export PATH=~/.yarn/bin:$PATH
