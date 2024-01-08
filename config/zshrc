@@ -90,10 +90,10 @@ esac
 
 case $OS in
 LINUX)
-  plugins=(git dirhistory zsh-syntax-highlighting zsh-autosuggestions zsh-completions zsh-history-substring-search systemd firewalld podman gpg-agent nvm thefuck)
+  plugins=(git dirhistory zsh-syntax-highlighting zsh-autosuggestions zsh-completions zsh-history-substring-search systemd firewalld podman gpg-agent nvm thefuck rust)
 ;;
 MAC)
-  plugins=(git dirhistory zsh-syntax-highlighting zsh-autosuggestions zsh-completions zsh-history-substring-search gnu-utils xcode macos podman gpg-agent nvm thefuck)
+  plugins=(git dirhistory zsh-syntax-highlighting zsh-autosuggestions zsh-completions zsh-history-substring-search gnu-utils xcode macos podman gpg-agent nvm thefuck rust)
 ;;
 esac
 
@@ -125,14 +125,12 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-# alias for batcat (debian)
-if [[ -e /usr/bin/batcat ]];then
-	alias bat=batcat
-fi
 
 # my alias
-alias ls="lsd"
-alias cat="bat -pp"
+if type batcat > /dev/null 2>&1;then alias bat=batcat;fi
+if type bat > /dev/null 2>&1;then alias cat="bat -pp";fi
+if type ugrep > /dev/null 2>&1;then alias grep=ugrep;fi
+if type lsd > /dev/null 2>&1;then alias ls="lsd";fi
 alias l='ls -alFh'
 alias ll='ls -lFh'
 
@@ -143,25 +141,36 @@ MAC)
   bindkey '\033[1;2C' forward-word
 
   ## my_PATH
-  export PATH=/opt/homebrew/opt/ruby/bin:$PATH # ruby bin
-  export PATH=/opt/homebrew/opt/curl/bin:$PATH # gnu curl
-  export PATH=$JAVA_HOME/bin:$PATH # java bin
+  if [[ -d "/opt/homebrew/opt/ruby/bin" ]]; then
+    export PATH=/opt/homebrew/opt/ruby/bin:$PATH
+    export PATH=`gem environment gemdir`/bin:$PATH
+  fi
+  if [[ -d "/opt/homebrew/opt/curl/bin" ]]; then export PATH=/opt/homebrew/opt/curl/bin:$PATH;fi # gnu curl
+  if [[ -d $JAVA_HOME ]]; then export PATH=$JAVA_HOME/bin:$PATH;fi # java bin
 
   ## my_env
-  export EDITOR=nano
-  export PAGER=most
+  if type nano > /dev/null 2>&1;then export EDITOR=nano;fi
+  if type most > /dev/null 2>&1;then export PAGER=most;fi
+
+  export CONTAINERS_MACHINE_PROVIDER=applehv # apple hypervisor
 
   # Docker support for Podman
-  export DOCKER_HOST="unix://$(podman machine inspect| jq '.[].ConnectionInfo.PodmanSocket.Path' | tr -d '"')"
+  if type podman > /dev/null 2>&1; then
+  	export DOCKER_HOST="unix://$(podman machine inspect| jq '.[].ConnectionInfo.PodmanSocket.Path' | tr -d '"')"
+  fi
 ;;
 LINUX)
   # Docker support for Podman
-  export DOCKER_HOST="unix://$XDG_RUNTIME_DIR/podman/podman.sock"
+  if [[ -S "$XDG_RUNTIME_DIR/podman/podman.sock" ]]; then
+	export DOCKER_HOST="unix://$XDG_RUNTIME_DIR/podman/podman.sock"
+  fi
+;;
 esac
 
 # my env
-export PATH=~/.yarn/bin:$PATH
-export PATH=~/.local/bin:$PATH
+if [[ -d ~/.yarn/bin ]];then export PATH=~/.yarn/bin:$PATH;fi
+if [[ -d ~/.local/bin ]]; then export PATH=~/.local/bin:$PATH;fi
+if [[ -e ~/.cargo/env ]]; then source ~/.cargo/env;fi
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

@@ -1,2 +1,3 @@
-set starshipbin (type -p starship)
-source ($starshipbin init fish --print-full-init | psub)
+if test -e (type -p starship) >/dev/null 2>&1
+   source (starship init fish --print-full-init | psub)
+end
