@@ -143,10 +143,17 @@ MAC)
   ## my_PATH
   if [[ -d "/opt/homebrew/opt/ruby/bin" ]]; then
     export PATH=/opt/homebrew/opt/ruby/bin:$PATH
-    export PATH=`gem environment gemdir`/bin:$PATH
+    export PATH=$(gem environment gemdir)/bin:$PATH
   fi
+
   if [[ -d "/opt/homebrew/opt/curl/bin" ]]; then export PATH=/opt/homebrew/opt/curl/bin:$PATH;fi # gnu curl
-  if [[ -d $JAVA_HOME ]]; then export PATH=$JAVA_HOME/bin:$PATH;fi # java bin
+
+  # JAVA
+  ANDROID_STUDIO_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home"
+  if [[ -d $ANDROID_STUDIO_HOME ]]; then
+    JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home"
+    export PATH=$JAVA_HOME/bin:$PATH
+  fi
 
   ## my_env
   if type nano > /dev/null 2>&1;then export EDITOR=nano;fi
@@ -161,8 +168,10 @@ MAC)
 ;;
 LINUX)
   # Docker support for Podman
-  if [[ -S "$XDG_RUNTIME_DIR/podman/podman.sock" ]]; then
-	export DOCKER_HOST="unix://$XDG_RUNTIME_DIR/podman/podman.sock"
+  if [[ -v XDG_RUNTIME_DIR ]]; then
+    if [[ -S "$XDG_RUNTIME_DIR/podman/podman.sock" ]]; then
+  	export DOCKER_HOST="unix://$XDG_RUNTIME_DIR/podman/podman.sock"
+    fi
   fi
 ;;
 esac
