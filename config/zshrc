@@ -160,11 +160,6 @@ MAC)
   if type most > /dev/null 2>&1;then export PAGER=most;fi
 
   export CONTAINERS_MACHINE_PROVIDER=applehv # apple hypervisor
-
-  # Docker support for Podman
-  if type podman > /dev/null 2>&1; then
-  	export DOCKER_HOST="unix://$(podman machine inspect| jq '.[].ConnectionInfo.PodmanSocket.Path' | tr -d '"')"
-  fi
 ;;
 LINUX)
   # Docker support for Podman
