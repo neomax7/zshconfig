@@ -90,10 +90,10 @@ esac
 
 case $OS in
 LINUX)
-  plugins=(git dirhistory zsh-syntax-highlighting zsh-autosuggestions zsh-completions zsh-history-substring-search systemd firewalld podman gpg-agent nvm thefuck rust)
+  plugins=(git dirhistory zsh-syntax-highlighting zsh-autosuggestions zsh-completions zsh-history-substring-search systemd firewalld podman gpg-agent nvm thefuck rust deno)
 ;;
 MAC)
-  plugins=(git dirhistory zsh-syntax-highlighting zsh-autosuggestions zsh-completions zsh-history-substring-search gnu-utils xcode macos podman gpg-agent nvm thefuck rust)
+  plugins=(git dirhistory zsh-syntax-highlighting zsh-autosuggestions zsh-completions zsh-history-substring-search gnu-utils xcode macos podman gpg-agent nvm thefuck rust node)
 ;;
 esac
 
