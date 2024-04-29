@@ -1,0 +1,10 @@
+[Unit]
+Description=xremap
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/xremap /usr/local/etc/xremap.yaml
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

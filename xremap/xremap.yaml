@@ -1,0 +1,18 @@
+keymap:
+  - name: functionkeys # Optional
+    remap: # Required
+      # Sequence (MOD1-KEY_XXX, MOD2-KEY_YYY) -> Key press (MOD3-KEY_ZZZ)
+      SUPER-KEY_1: KEY_F1
+      SUPER-KEY_2: KEY_F2
+      SUPER-KEY_3: KEY_F3
+      SUPER-KEY_4: KEY_F4
+      SUPER-KEY_5: KEY_F5
+      SUPER-KEY_6: KEY_F6
+      SUPER-KEY_7: KEY_F7
+      SUPER-KEY_8: KEY_F8
+      SUPER-KEY_9: KEY_F9
+      SUPER-KEY_0: KEY_F10
+      SUPER-KEY_MINUS: KEY_F11
+      SUPER-KEY_EQUAL: KEY_F12
+      KEY_SLEEP: KEY_DELETE
+      KEY_ZOOM: KEY_PRINT
