@@ -174,6 +174,7 @@ esac
 # my env
 if [[ -d ~/.yarn/bin ]];then export PATH=~/.yarn/bin:$PATH;fi
 if [[ -d ~/.local/bin ]]; then export PATH=~/.local/bin:$PATH;fi
+if [[ -d ~/go/bin ]]; then export PATH=~/go/bin:$PATH;fi
 if [[ -e ~/.cargo/env ]]; then source ~/.cargo/env;fi
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
