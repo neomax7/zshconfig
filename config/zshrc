@@ -88,12 +88,42 @@ Darwin)
 ;;
 esac
 
+PLUGINS=(git dirhistory zsh-syntax-highlighting zsh-autosuggestions zsh-completions zsh-history-substring-search systemd firewalld)
+
+if [[ -f ~/.nvm/nvm.sh ]]
+then
+  PLUGINS+=nvm
+fi
+
+if [[ -f "$(whence rustc)" ]]
+then
+  PLUGINS+=rust
+fi
+
+if [[ -f "$(whence deno)" ]]
+then
+  PLUGINS+=deno
+fi
+
+if [[ -f "$(whence podman)" ]]
+then
+  PLUGINS+=podman
+fi
+
+if [[ -f "$(whence gpg-agent)" ]]
+then
+  PLUGINS+=gpg-agent
+fi
+
 case $OS in
 LINUX)
-  plugins=(git dirhistory zsh-syntax-highlighting zsh-autosuggestions zsh-completions zsh-history-substring-search systemd firewalld podman gpg-agent nvm rust deno)
+  set -A plugins $PLUGINS
 ;;
 MAC)
-  plugins=(git dirhistory zsh-syntax-highlighting zsh-autosuggestions zsh-completions zsh-history-substring-search gnu-utils xcode macos podman gpg-agent nvm rust node)
+  PLUGINS+=gnu-utils
+  PLUGINS+=macos
+  PLUGINS+=xcode
+  set -A plugins $PLUGINS
 ;;
 esac
 
@@ -127,10 +157,23 @@ source $ZSH/oh-my-zsh.sh
 
 
 # my alias
-if type batcat > /dev/null 2>&1;then alias bat=batcat;fi
-if type bat > /dev/null 2>&1;then alias cat="bat -pp";fi
-if type ugrep > /dev/null 2>&1;then alias grep=ugrep;fi
-if type lsd > /dev/null 2>&1;then alias ls="lsd";fi
+if [[ -x "$(whence batcat)" ]]
+then
+  alias bat=batcat
+  alias cat="bat -pp"
+fi
+if [[ -x "$(whence bat)" ]]
+then
+  alias cat="bat -pp"
+fi
+if [[ -x "$(whence ugrep)" ]]
+then
+  alias grep=ugrep
+fi
+if [[ -x "$(whence lsd)" ]]
+then
+  alias ls="lsd"
+fi
 alias l='ls -alFh'
 alias ll='ls -lFh'
 
@@ -141,25 +184,45 @@ MAC)
   bindkey '\033[1;2C' forward-word
 
   ## my_PATH
-  if [[ -d "/opt/homebrew/opt/ruby/bin" ]]; then
+  if [[ -d "/opt/homebrew/opt/ruby/bin" ]]
+  then
     export PATH=/opt/homebrew/opt/ruby/bin:$PATH
     export PATH=$(gem environment gemdir)/bin:$PATH
   fi
 
-  if [[ -d "/opt/homebrew/opt/curl/bin" ]]; then export PATH=/opt/homebrew/opt/curl/bin:$PATH;fi # gnu curl
+  # gnu curl
+  if [[ -d "/opt/homebrew/opt/curl/bin" ]]
+  then
+    export PATH=/opt/homebrew/opt/curl/bin:$PATH
+  fi
 
   # JAVA
-  ANDROID_STUDIO_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home"
-  if [[ -d $ANDROID_STUDIO_HOME ]]; then
+  export ANDROID_STUDIO_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home"
+  export ANDROID_HOME=$HOME/Library/Android/sdk
+
+  if [[ -d $ANDROID_HOME ]]
+  then
+    export PATH=$PATH:$ANDROID_HOME/emulator
+    export PATH=$PATH:$ANDROID_HOME/platform-tools
+  fi
+  if [[ -d $ANDROID_STUDIO_HOME ]]
+  then
     JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home"
     export PATH=$JAVA_HOME/bin:$PATH
   fi
 
   ## my_env
-  if type nano > /dev/null 2>&1;then export EDITOR=nano;fi
-  if type most > /dev/null 2>&1;then export PAGER=most;fi
+  if [[ -x nano ]]
+  then
+    export EDITOR=nano
+  fi
+  if [[ -x most ]]
+  then
+    export PAGER=most
+  fi
 
-  export CONTAINERS_MACHINE_PROVIDER=applehv # apple hypervisor
+  # apple hypervisor
+  export CONTAINERS_MACHINE_PROVIDER=applehv
 ;;
 LINUX)
   # Docker support for Podman
@@ -167,6 +230,15 @@ LINUX)
     if [[ -S "$XDG_RUNTIME_DIR/podman/podman.sock" ]]; then
   	export DOCKER_HOST="unix://$XDG_RUNTIME_DIR/podman/podman.sock"
     fi
+  fi
+  if [[ -d "$HOME/android-studio" ]]
+  then
+    export ANDROID_STUDIO_HOME=~/android-studio
+    export JAVA_HOME=~/android-studio/jbr
+  fi
+  if [[ -d "$HOME/Android/Sdk" ]]
+  then
+    export ANDROID_HOME=~/Android/Sdk
   fi
 ;;
 esac
@@ -177,5 +249,9 @@ if [[ -d ~/.local/bin ]]; then export PATH=~/.local/bin:$PATH;fi
 if [[ -d ~/go/bin ]]; then export PATH=~/go/bin:$PATH;fi
 if [[ -e ~/.cargo/env ]]; then source ~/.cargo/env;fi
 
+export PAGER=most
+export EDITOR=nano
+
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

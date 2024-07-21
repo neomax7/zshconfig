@@ -54,9 +54,5 @@ cp $HOME/.zshrc $HOME/.zshrc_bac
 sed -i 's/ZSH_THEME\=\"robbyrussell\"/ZSH_THEME\=\"powerlevel10k\/powerlevel10k\"/' $HOME/.zshrc
 
 ### apply plugins
-if [[ $OS = 'MAC' ]]
-then
-   sed -i 's/plugins=(git)/plugins=(git dirhistory zsh-syntax-highlighting zsh-autosuggestions zsh-completions zsh-history-substring-search mac-zsh-completions gnu-utils xcode macos thefuck gpg-agent )/' $HOME/.zshrc
-else
-   sed -i 's/plugins=(git)/plugins=(git dirhistory zsh-syntax-highlighting zsh-autosuggestions zsh-completions zsh-history-substring-search systemd firewalld thefuck gpg-agent)/' $HOME/.zshrc
-fi
+rm ~/.zshrc
+cp $(pwd)/config/zshrc ~/.zshrc
