@@ -1,6 +1,6 @@
 #compdef cloudflared
 
-# this is based on cloudflared 2023.10.0
+# this is based on cloudflared 2024.08.2
 #TODO: TUNNEL subcommands and options
 
 local -a access_login_opts
@@ -39,8 +39,8 @@ _regex_words access-tcp-rdp-ssh-smb-opts "Access TCP/RDP/SSH/SMB Options" \
 '--sec*ret:specify an Access service token secret you wish to use.' \
 '--logf*ile:Save application log to this file for reporting issues.' \
 '--log-d*irectory:Save application log to this directory for reporting issues.' \
-'--log-l*evel:Application logging level {debug, info, warn, error, fatal}.' \
-'--logl*evel:Application logging level {debug, info, warn, error, fatal}.' \
+'--log-l*evel:Application logging level options(debug, info, warn, error, fatal).' \
+'--logl*evel:Application logging level options(debug, info, warn, error, fatal).' \
 '--hel*p:show help' \
 '-h:show help'
 access_tcp_rdp_ssh_smb_opts=("$reply[@]")
@@ -73,6 +73,39 @@ _regex_words access-cmds "Access Command" \
 'ssh-g*en:Generates a short lived certificate for given hostname:$access_sshgen_opts' \
 'h*elp:Shows a list of commands or help for one command'
 access_cmds=("$reply[@]")
+
+local -a proxy_opts
+_regex_words proxy-opts "Proxy-Dns Options" \
+'--me*trics:Listen address for metrics reporting. ' \
+'--a*ddress:Listen address for the DNS over HTTPS proxy server. ' \
+'--p*ort:Listen on given port for the DNS over HTTPS proxy server. ' \
+'--u*pstream:Upstream endpoint URL, you can specify multiple endpoints for redundancy. ' \
+'--b*ootstrap:bootstrap endpoint URL, you can specify multiple endpoints for redundancy. ' \
+'--ma*x-upstream-conns:Maximum concurrent connections to upstream. Setting to 0 means unlimited. ' \
+'--h*elp:show help '
+proxy_opts=("$reply[@]")
+
+local -a update_opts
+_regex_words update-opts  "Update Options" \
+'--b*eta:specify if you wish to update to the latest beta version ' \
+'--v*ersion:specify a version you wish to upgrade or downgrade to' \
+'--h*elp:show help ' \
+'-h:show help '
+update_opts=("$reply[@]")
+
+local -a tail_opts
+_regex_words tail-opts "Tail Options" \
+'--c*onnector-id:Access a specific cloudflared instance by connector id (for when a tunnel has multiple cloudflareds) ' \
+'--e*vent:Filter by specific Events (cloudflared, http, tcp, udp) otherwise, defaults to send all events  (accepts multiple inputs) ' \
+'--le*vel:Filter by specific log levels (debug, info, warn, error). Filters by debug log level by default. ' \
+'--s*ample:Sample log events by percentage (0.0 .. 1.0). No sampling by default. ' \
+'--t*oken:Access token for a specific tunnel ' \
+'--ou*tput:Output format for the logs ' \
+'--lo*glevel:Application logging level options(debug, info, warn, error, fatal) ' \
+'--or*igincert:Path to the certificate generated for your origin when you run cloudflared login. ' \
+'--h*elp:show help ' \
+'-h:show help '
+tail_opts=("$reply[@]")
 
 local -a tunnel_login_opts
 _regex_words tunnel-login-opts "Tunnel Login Options" \
@@ -162,14 +195,86 @@ _regex_words tunnel-cmds "Tunnel Commands" \
 'd*elete:Delete existing tunnel by UUID or name:$tunnel_delete_opts' \
 'cl*eanup:Cleanup tunnel connections:$tunnel_cleanup_opts' \
 't*oken:Fetch the credentials token for an existing tunnel (by name or UUID) that allows to run it:$tunnel_token_opts' \
-'h*elp:Shows a list of commands or help for one command'
+'h*elp:Shows a list of commands or help for one command' \
+'--a*utoupdate-freq:Autoupdate frequency. Default is 24h0m0s. ' \
+'--b*astion:Runs as jump host  ' \
+'--com*pression-quality:(beta) Use cross-stream compression instead HTTP compression. 0-off, 1-low, 2-medium, \>\=3-high.  ' \
+'--con*fig:Specifies a config file in YAML format.' \
+'--crede*ntials-file:Filepath at which to read/write the tunnel credentials ' \
+'--cred-*file:Filepath at which to read/write the tunnel credentials ' \
+'--edge-b*ind-address:Bind to IP address for outgoing connections to Cloudflare Edge. ' \
+'--edge-i*p-version:Cloudflare Edge IP address version to connect with. options(4, 6, auto)  ' \
+'--g*race-period:When cloudflared receives SIGINT/SIGTERM it will stop accepting new requests, wait for in-progress requests to terminate, then shutdown. Waiting for in-progress requests will timeout after this grace period, or when a second SIGTERM/SIGINT is received.  ' \
+'--hell*o-world:Run Hello World Server  ' \
+'--help*:show help ' \
+'--ho*stname:Set a hostname on a Cloudflare zone to route traffic through this tunnel. ' \
+'--http2*-origin:Enables HTTP/2 origin servers.  ' \
+'--la*bel:Use this option to give a meaningful label to a specific connector. When a tunnel starts up, a connector id unique to the tunnel is generated. This is a uuid. To make it easier to identify a connector, we will use the hostname of the machine the tunnel is running on along with the connector ID. This option exists if one wants to have more control over what their individual connectors are called.' \
+'--lb*-pool:The name of a (new/existing) load balancing pool to add this origin to. ' \
+'--log-*directory:Save application log to this directory for reporting issues. ' \
+'--logf*ile:Save application log to this file for reporting issues. ' \
+'--logl*evel:Application logging level options(debug, info, warn, error, fatal). At debug level cloudflared will log request URL, method, protocol, content length, as well as, all request and response headers. This can expose sensitive information in your logs.  ' \
+'--ma*nagement-diagnostics:Enables the in-depth diagnostic routes to be made available over the management service (/debug/pprof, /metrics, etc.)  ' \
+'--metrics:Listen address for metrics reporting.  ' \
+'--metrics-*update-freq:Frequency to update tunnel metrics  ' \
+'--na*me:Stable name to identify the tunnel. Using this flag will create, route and run a tunnel. For production usage, execute each command separately ' \
+'--no-a*utoupdate:Disable periodic check for updates, restarting the server with the new version.  ' \
+'--originc*ert:Path to the certificate generated for your origin when you run cloudflared login. ' \
+'--ov*erwrite-dns:Overwrites existing DNS records with this hostname  ' \
+'--pi*dfile:Write the applications PID to this file after first successful connection. ' \
+'--po*st-quantum:When given creates an experimental post-quantum secure tunnel  ' \
+'--prot*o-loglevel:Transport logging level(previously called protocol logging level) options(debug, info, warn, error, fatal)  ' \
+'--proxy-a*ddress:Listen address for the proxy.  ' \
+'--proxy-dns-a*ddress:Listen address for the DNS over HTTPS proxy server.  ' \
+'--proxy-dns-b*ootstrap:bootstrap endpoint URL, you can specify multiple endpoints for redundancy.  ' \
+'--proxy-dns-m*ax-upstream-conns:Maximum concurrent connections to upstream. Setting to 0 means unlimited.  ' \
+'--proxy-dns-p*ort:Listen on given port for the DNS over HTTPS proxy server.  ' \
+'--proxy-dns:Run a DNS over HTTPS proxy server.  ' \
+'--proxy-dns-u*pstream:Upstream endpoint URL, you can specify multiple endpoints for redundancy.  ' \
+'--proxy-p*ort:Listen port for the proxy.  ' \
+'--reg*ion:Cloudflare Edge region to connect to. Omit or set to empty to connect to the global region. ' \
+'--ret*ries:Maximum number of retries for connection/protocol errors.  ' \
+'--trac*e-output:Name of trace output file, generated when cloudflared stops. ' \
+'--tran*sport-loglevel:Transport logging level(previously called protocol logging level) options(debug, info, warn, error, fatal)  ' \
+'--un*ix-socket:Path to unix socket to use instead of --url ' \
+'--s*ocks5:specify if this tunnel is running as a SOCK5 Server This flag only takes effect if you define your origin with and if you do not use ingress rules. The recommended way is to rely on ingress rules and define this property under originRequest' \
+'--proxy-co*nnect-timeout:HTTP proxy timeout for establishing a new connection This flag only takes effect if you define your origin with and if you do not use ingress rules. The recommended way is to rely on ingress rules and define this property under originRequest' \
+'--proxy-tl*s-timeout:HTTP proxy timeout for completing a TLS handshake This flag only takes effect if you define your origin with and if you do not use ingress rules. The recommended way is to rely on ingress rules and define this property under originRequest' \
+'--proxy-tc*p-keepalive:HTTP proxy TCP keepalive duration This flag only takes effect if you define your origin with and if you do not use ingress rules. The recommended way is to rely on ingress rules and define this property under originRequest' \
+'--proxy-n*o-happy-eyeballs:HTTP proxy should disable "happy eyeballs" for IPv4/v6 fallback This flag only takes effect if you define your origin with and if you do not use ingress rules. The recommended way is to rely on ingress rules and define this property under originRequest' \
+'--proxy-keepalive-c*onnections:HTTP proxy maximum keepalive connection pool size This flag only takes effect if you define your origin with and if you do not use ingress rules. The recommended way is to rely on ingress rules and define this property under originRequest' \
+'--proxy-keepalive-t*imeout:HTTP proxy timeout for closing an idle connection This flag only takes effect if you define your origin with and if you do not use ingress rules. The recommended way is to rely on ingress rules and define this property under originRequest' \
+'--http-*host-header:Sets the HTTP Host header for the local webserver. This flag only takes effect if you define your origin with and if you do not use ingress rules. The recommended way is to rely on ingress rules and define this property under originRequest' \
+'--origin-s*erver-name:Hostname on the origin server certificate. This flag only takes effect if you define your origin with and if you do not use ingress rules. The recommended way is to rely on ingress rules and define this property under originRequest' \
+'--origin-c*a-pool:Path to the CA for the certificate of your origin. This option should be used only if your certificate is not signed by Cloudflare. This flag only takes effect if you define your origin with and if you do not use ingress rules. The recommended way is to rely on ingress rules and define this property under originRequest' \
+'--no-t*ls-verify:Disables TLS verification of the certificate presented by your origin. Will allow any certificate from the origin to be accepted.(The connection from your machine to Cloudflares Edge is still encrypted.) This flag only takes effect if you define your origin with and if you do not use ingress rules. The recommended way is to rely on ingress rules and define this property under originRequest' \
+'--no-c*hunked-encoding:Disables chunked transfer encoding useful if you are running a WSGI server. This flag only takes effect if you define your origin with and if you do not use ingress rules. The recommended way is to rely on ingress rules and define this property under originRequest' \
+'--ur*l:Connect to the local webserver at URL.  '
 tunnel_cmds=("$reply[@]")
+
+local -a service_cmds
+_regex_words service_cmds "Service Commands" \
+'i*nstall:Install cloudflared as a system service' \
+'u*ninstall:Uninstall the cloudflared service' \
+'h*elp:Shows a list of commands or help for one command'
+service_cmds=("$reply[@]")
 
 # Arguments to \_regex_arguments, built up in array $args.
 local -a args reply
 args=( # Command word. Don't care what that is.
 /$'[^\0]#\0'/
 )
+
+_regex_words top-cmds "top Commands" \
+'u*pdate:Update the agent if a new version exists:$update_opts' \
+'v*ersion:Print the version' \
+'p*roxy-dns:Run a DNS over HTTPS proxy server.:$proxy_opts' \
+'s*ervice:Manages the cloudflared system service:$service_cmds' \
+'h*elp:Shows a list of commands or help for one command' \
+'a*ccess:Forward/Access subcommand:$access_cmds' \
+'ta*il:Stream logs from a remote cloudflared:$tail_opts' \
+'tu*nnel:Use Cloudflare Tunnel to expose private services to the Internet or to Cloudflare connected private users:$tunnel_cmds'
+args+=("$reply[@]" "#")
 
 _regex_words top-opts "top Options" \
 '--crede*ntials-file::Filepath at which to read/write the tunnel credentials' \
@@ -188,17 +293,6 @@ _regex_words top-opts "top Options" \
 '--ve*rsion:Print the version' \
 '-v:Print the version' \
 '-V:Print the version'
-args+=("$reply[@]" "#")
-
-_regex_words top-cmds "top Commands" \
-'u*pdate:Update the agent if a new version exists' \
-'v*ersion:Print the version' \
-'p*roxy-dns:Run a DNS over HTTPS proxy server.' \
-'s*ervice:Manages the cloudflared system service' \
-'h*elp:Shows a list of commands or help for one command' \
-'a*ccess:Forward/Access subcommand:$access_cmds' \
-'ta*il:Stream logs from a remote cloudflared' \
-'tu*nnel:Use Cloudflare Tunnel to expose private services to the Internet or to Cloudflare connected private users:$tunnel_cmds'
 args+=("$reply[@]")
 
 _regex_arguments _cloudflared "${args[@]}"
