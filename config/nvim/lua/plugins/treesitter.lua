@@ -25,6 +25,7 @@ return {
 				"yaml",
 				"html",
 				"css",
+				"toml",
 				"markdown",
 				"markdown_inline",
 				"bash",
