@@ -21,27 +21,27 @@ esac
 
 PLUGINS=(git dirhistory zsh-syntax-highlighting zsh-autosuggestions zsh-completions zsh-history-substring-search systemd firewalld)
 
-if [[ -f ~/.nvm/nvm.sh ]]
+if [[ -f ~/.nvm/nvm.sh ]];
 then
   PLUGINS+=nvm
 fi
 
-if [[ -f "$(whence rustc)" ]]
+if [[ -f "$(whence rustc)" ]];
 then
   PLUGINS+=rust
 fi
 
-if [[ -f "$(whence deno)" ]]
+if [[ -f "$(whence deno)" ]] || [[ -f ~/.deno/bin/deno ]];
 then
   PLUGINS+=deno
 fi
 
-if [[ -f "$(whence podman)" ]]
+if [[ -f "$(whence podman)" ]];
 then
   PLUGINS+=podman
 fi
 
-if [[ -f "$(whence gpg-agent)" ]]
+if [[ -f "$(whence gpg-agent)" ]];
 then
   PLUGINS+=gpg-agent
 fi
@@ -158,10 +158,31 @@ LINUX)
 esac
 
 # my env
-if [[ -d ~/.yarn/bin ]];then export PATH=~/.yarn/bin:$PATH;fi
-if [[ -d ~/.local/bin ]]; then export PATH=~/.local/bin:$PATH;fi
-if [[ -d ~/go/bin ]]; then export PATH=~/go/bin:$PATH;fi
-if [[ -e ~/.cargo/env ]]; then source ~/.cargo/env;fi
+# yarn
+if [[ -d ~/.yarn/bin ]];
+then
+  export PATH=~/.yarn/bin:$PATH;
+fi
+# local bin
+if [[ -d ~/.local/bin ]];
+then
+  export PATH=~/.local/bin:$PATH;
+fi
+# golang
+if [[ -d ~/go/bin ]];
+then
+  export PATH=~/go/bin:$PATH;
+fi
+# rust
+if [[ -e ~/.cargo/env ]];
+then
+  source ~/.cargo/env;
+fi
+# deno
+if [[ -f ~/.deno/bin/deno ]];
+then
+  export PATH=~/.deno/bin:$PATH;
+fi
 
 export PAGER=most
 export EDITOR=nvim
