@@ -32,9 +32,18 @@ return {
 					capabilities = capabilities,
 				})
 			end,
+			["denols"] = function()
+				nvim_lsp["denols"].setup({
+					on_attach = on_attach,
+					root_dir = nvim_lsp.util.root_pattern("deno.json", "deno.jsonc"),
+					capabilities = capabilities,
+				})
+			end,
 			["ts_ls"] = function()
 				nvim_lsp["ts_ls"].setup({
 					on_attach = on_attach,
+					root_dir = nvim_lsp.util.root_pattern("package.json"),
+					single_file_support = false,
 					capabilities = capabilities,
 				})
 			end,
