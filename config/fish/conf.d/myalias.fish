@@ -14,3 +14,7 @@ end
 if type ugrep > /dev/null 2>&1
 	alias grep=ugrep
 end
+
+if type nvim > /dev/null 2>&1
+	alias vi=nvim
+end

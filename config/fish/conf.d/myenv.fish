@@ -4,8 +4,8 @@ case Darwin
   if type most > /dev/null 2>&1
 	export PAGER=most
   end
-  if type nano > /dev/null 2>&1
-	export EDITOR=nano
+  if type nvim > /dev/null 2>&1
+	export EDITOR=nvim
   end
   if type podman > /dev/null 2>&1
     if test -S (podman machine inspect| jq '.[].ConnectionInfo.PodmanSocket.Path' | tr -d '"')
