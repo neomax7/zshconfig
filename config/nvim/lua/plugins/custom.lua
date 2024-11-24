@@ -93,38 +93,6 @@ return {
     },
   },
 
-  -- add pyright to lspconfig
-  {
-    "neovim/nvim-lspconfig",
-    ---@class PluginLspOpts
-    opts = {
-      ---@type lspconfig.options
-      servers = {
-        -- pyright will be automatically installed with mason and loaded with lspconfig
-        pyright = {},
-        tsserver = {},
-      },
-    },
-    setup = {
-      tsserver = function(_, opts)
-        require("typescript").setup({ server = opts })
-        return true
-      end,
-    },
-    dependencies = {
-      "jose-elias-alvarez/typescript.nvim",
-      init = function()
-        require("lazyvim.util").lsp.on_attach(function(_, buffer)
-          -- stylua: ignore
-          vim.keymap.set( "n", "<leader>co", "TypescriptOrganizeImports", { buffer = buffer, desc = "Organize Imports" })
-          vim.keymap.set("n", "<leader>cR", "TypescriptRenameFile", { desc = "Rename File", buffer = buffer })
-        end)
-      end,
-    },
-  },
-
-  { import = "lazyvim.plugins.extras.lang.typescript" },
-
   -- add tsserver and setup with typescript.nvim instead of lspconfig
   {
     "neovim/nvim-lspconfig",
@@ -180,6 +148,7 @@ return {
         "query",
         "regex",
         "tsx",
+        "rust",
         "typescript",
         "sql",
         "vim",
@@ -221,17 +190,6 @@ return {
         theme = "catppuccin",
       },
     },
-  },
-
-  -- or you can return new options to override all the defaults
-  {
-    "nvim-lualine/lualine.nvim",
-    event = "VeryLazy",
-    opts = function()
-      return {
-        --[[add your custom lualine config here]]
-      }
-    end,
   },
 
   -- use mini.starter instead of alpha
