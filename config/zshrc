@@ -9,6 +9,11 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Caution: this setting can cause issues with multiline prompts in zsh < 5.7.1 (see #5765)
 # COMPLETION_WAITING_DOTS="true"
 
+if [[ -d ~/.local/share/zsh/site-functions ]];
+then
+  fpath+=$HOME/.local/share/zsh/site-functions
+fi
+
 ## check OS
 case $(uname) in
 Linux)
