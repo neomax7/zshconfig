@@ -14,6 +14,11 @@ then
   fpath+=$HOME/.local/share/zsh/site-functions
 fi
 
+if [[ -f ~/.config/bws/bws ]];
+then
+  source ~/.config/bws/bws
+fi
+
 ## check OS
 case $(uname) in
 Linux)
