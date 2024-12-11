@@ -1,6 +1,12 @@
 [window]
 dimensions= { columns = 160, lines = 55 }
+decorations= "Full"
 opacity= 0.85
+blur= true
+
+[scrolling]
+history= 100000
+multiplier= 10
 
 [font]
 #normal= { family = "Hack Nerd Font Mono", style="Regular" }
