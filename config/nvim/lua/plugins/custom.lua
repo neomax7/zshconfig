@@ -146,6 +146,7 @@ return {
         "markdown_inline",
         "python",
         "query",
+        "svelte",
         "regex",
         "tsx",
         "rust",
