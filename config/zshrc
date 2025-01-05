@@ -56,6 +56,11 @@ then
   PLUGINS+=gpg-agent
 fi
 
+if [[ -f "$(whence terraform)" ]];
+then
+  PLUGINS+=terraform
+fi
+
 case $OS in
 LINUX)
   set -A plugins $PLUGINS
