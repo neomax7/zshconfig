@@ -41,6 +41,11 @@ then
   PLUGINS+=rust
 fi
 
+if [[ -f "$(whence nmap)" ]];
+then
+  PLUGINS+=rust
+fi
+
 if [[ -f "$(whence deno)" ]] || [[ -f ~/.deno/bin/deno ]];
 then
   PLUGINS+=deno
