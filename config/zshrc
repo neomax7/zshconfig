@@ -139,7 +139,10 @@ MAC)
     JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home"
     export PATH=$JAVA_HOME/bin:$PATH
   fi
-
+  if [[ -d '/opt/homebrew/share/zsh/site-functions' ]]
+  then
+    fpath+='/opt/homebrew/share/zsh/site-functions'
+  fi
   ## my_env
   if [[ -x $(whence nvim) ]]
   then
