@@ -80,6 +80,33 @@ esac
 
 source $ZSH/oh-my-zsh.sh
 
+# my env
+# yarn
+if [[ -d ~/.yarn/bin ]];
+then
+  export PATH=~/.yarn/bin:$PATH;
+fi
+# local bin
+if [[ -d ~/.local/bin ]];
+then
+  export PATH=~/.local/bin:$PATH;
+fi
+# golang
+if [[ -d ~/go/bin ]];
+then
+  export PATH=~/go/bin:$PATH;
+fi
+# rust
+if [[ -e ~/.cargo/env ]];
+then
+  source ~/.cargo/env;
+fi
+# deno
+if [[ -f ~/.deno/bin/deno ]];
+then
+  export PATH=~/.deno/bin:$PATH;
+fi
+
 #my alias
 if [[ -x "$(whence batcat)" ]]
 then
@@ -179,33 +206,6 @@ LINUX)
   fi
 ;;
 esac
-
-# my env
-# yarn
-if [[ -d ~/.yarn/bin ]];
-then
-  export PATH=~/.yarn/bin:$PATH;
-fi
-# local bin
-if [[ -d ~/.local/bin ]];
-then
-  export PATH=~/.local/bin:$PATH;
-fi
-# golang
-if [[ -d ~/go/bin ]];
-then
-  export PATH=~/go/bin:$PATH;
-fi
-# rust
-if [[ -e ~/.cargo/env ]];
-then
-  source ~/.cargo/env;
-fi
-# deno
-if [[ -f ~/.deno/bin/deno ]];
-then
-  export PATH=~/.deno/bin:$PATH;
-fi
 
 export PAGER=most
 export EDITOR=nvim
