@@ -86,6 +86,8 @@ fi
 if [[ -f "$(whence gpg-agent)" ]];
 then
   PLUGINS+=gpg-agent
+  export GPG_TTY=$(tty)
+  export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
 fi
 
 if [[ -f "$(whence terraform)" ]];
@@ -104,7 +106,6 @@ MAC)
   set -A plugins $PLUGINS
 ;;
 esac
-
 source $ZSH/oh-my-zsh.sh
 
 #my alias
