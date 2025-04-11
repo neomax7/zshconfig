@@ -136,6 +136,9 @@ alias ll='ls -lFh'
 
 case $OS in
 MAC)
+  ## MANPATH
+  MANPATH=/opt/homebrew/share/man/man1:$MANPATH
+ 
   ### my mac keybind
   bindkey '\033[1;2D' backward-word
   bindkey '\033[1;2C' forward-word
@@ -157,6 +160,7 @@ MAC)
   export ANDROID_STUDIO_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home"
   export ANDROID_HOME=$HOME/Library/Android/sdk
 
+  # ANDROID STUDIO
   if [[ -d $ANDROID_HOME ]]
   then
     export PATH=$PATH:$ANDROID_HOME/emulator
@@ -171,6 +175,14 @@ MAC)
   then
     fpath+='/opt/homebrew/share/zsh/site-functions'
   fi
+
+  # GNN bin
+  if [[ -d /opt/homebrew/opt/coreutils/libexec/gnubin ]]
+  then
+    PATH=/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH
+    MANPATH=/opt/homebrew/opt/coreutils/libexec/gnuman:$MANPATH
+  fi
+  
   ## my_env
   if [[ -x $(whence nvim) ]]
   then
