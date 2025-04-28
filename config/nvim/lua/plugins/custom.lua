@@ -70,8 +70,10 @@ return {
     "MunifTanjim/prettier.nvim",
     require("mason").setup(),
     require("mason-lspconfig").setup({
-      ensure_installed = { "lua_ls", "rust_analyzer", "denols", "svelte", "pyright", "ts_ls" },
+      automatic_installation = true,
+      ensure_installed = { "lua_ls", "gopls", "rust_analyzer", "denols", "svelte", "pyright", "ts_ls" },
     }),
+    require("lspconfig").gopls.setup({}),
     require("lspconfig").pyright.setup({}),
     require("lspconfig").ts_ls.setup({}),
     require("lspconfig").denols.setup({}),
@@ -86,6 +88,7 @@ return {
     opts = {
       ensure_installed = {
         "bash",
+        "go",
         "html",
         "javascript",
         "json",
