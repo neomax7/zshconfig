@@ -49,6 +49,11 @@ if [[ -f ~/.deno/bin/deno ]];
 then
   export PATH=~/.deno/bin:$PATH;
 fi
+## windsurf
+if [[ -d ~/.codeium/windsurf ]];
+then
+  export PATH=~/.codeium/windsurf/bin:$PATH
+fi
 
 ## check OS
 case $(uname) in

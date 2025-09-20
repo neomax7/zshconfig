@@ -1,18 +1,18 @@
 #! /bin/bash
 
-#### stop script on error 
+#### stop script on error
 set -e
 
 ### install zsh
 # script from jotyGill/ezsh
-if command -v zsh &> /dev/null && command -v git &> /dev/null && command -v curl &> /dev/null; then
-    echo -e "zsh curl and git are already installed\n"
+if command -v zsh &>/dev/null && command -v git &>/dev/null && command -v curl &>/dev/null; then
+  echo -e "zsh curl and git are already installed\n"
 else
-    if sudo apt install -y zsh git curl || sudo pacman -S zsh git curl || sudo dnf install -y zsh git curl || sudo yum install -y zsh git curl || sudo brew install git zsh curl || pkg install git zsh curl ; then
-        echo -e "zsh curl and git Installed\n"
-    else
-        echo -e "Please install the following packages first, then try again: zsh git curl \n" && exit
-    fi
+  if sudo apt install -y zsh git curl || sudo pacman -S zsh git curl || sudo dnf install -y zsh git curl || sudo yum install -y zsh git curl || sudo brew install git zsh curl || pkg install git zsh curl; then
+    echo -e "zsh curl and git Installed\n"
+  else
+    echo -e "Please install the following packages first, then try again: zsh git curl \n" && exit
+  fi
 fi
 # end
 
@@ -22,13 +22,13 @@ sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.
 ### check if its mac
 case $(uname) in
 Darwin)
-  echo "OS:Mac";
-  OS=MAC;
-;;
+  echo "OS:Mac"
+  OS=MAC
+  ;;
 Linux)
-  echo "OS:Linux";
-  OS=LINUX;
-;;
+  echo "OS:Linux"
+  OS=LINUX
+  ;;
 esac
 
 ### install custom themes
@@ -41,8 +41,7 @@ git clone --depth=1 https://github.com/zsh-users/zsh-completions.git ${ZSH_CUSTO
 git clone --depth=1 https://github.com/zsh-users/zsh-history-substring-search.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-history-substring-search/
 
 ### install custom plugins for mac
-if [[ $OS = 'MAC' ]]
-then
+if [[ $OS = 'MAC' ]]; then
   ### get mac-zsh-completions -> store to custom plugins
   git clone --depth=1 https://github.com/scriptingosx/mac-zsh-completions.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/mac-zsh-completions/
 fi
@@ -56,3 +55,8 @@ sed -i 's/ZSH_THEME\=\"robbyrussell\"/ZSH_THEME\=\"powerlevel10k\/powerlevel10k\
 ### apply plugins
 rm ~/.zshrc
 cp $(pwd)/config/zshrc ~/.zshrc
+
+### lazyvim config
+rm -rf ~/.config/nvim
+git clone https://github.com/LazyVim/starter ~/.config/nvim
+rm -rf ~/.config/nvim/.git
