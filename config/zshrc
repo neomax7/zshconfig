@@ -217,12 +217,6 @@ MAC)
   export CONTAINERS_MACHINE_PROVIDER=applehv
 ;;
 LINUX)
-  # Docker support for Podman
-  if [[ -v XDG_RUNTIME_DIR ]]; then
-    if [[ -S "$XDG_RUNTIME_DIR/podman/podman.sock" ]]; then
-  	export DOCKER_HOST="unix://$XDG_RUNTIME_DIR/podman/podman.sock"
-    fi
-  fi
   if [[ -d "$HOME/android-studio" ]]
   then
     export ANDROID_STUDIO_HOME=~/android-studio
