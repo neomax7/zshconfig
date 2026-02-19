@@ -49,11 +49,6 @@ if [[ -f ~/.deno/bin/deno ]];
 then
   export PATH=~/.deno/bin:$PATH;
 fi
-## windsurf
-if [[ -d ~/.codeium/windsurf ]];
-then
-  export PATH=~/.codeium/windsurf/bin:$PATH
-fi
 
 ## check OS
 case $(uname) in
@@ -67,9 +62,20 @@ esac
 
 PLUGINS=(git dirhistory zsh-syntax-highlighting zsh-autosuggestions zsh-completions zsh-history-substring-search systemd firewalld)
 
+if [[ -f "$(whence docker)" ]];
+then
+  PLGUINS+=docker
+fi
+
 if [[ -f ~/.nvm/nvm.sh ]];
 then
   PLUGINS+=nvm
+fi
+
+if [[ -f ~/.bun/bin/bun ]];
+then
+  PLUGINS+=bun
+  export PATH=~/.bun/bin:$PATH
 fi
 
 if [[ -f "$(whence rustc)" ]];
@@ -234,4 +240,3 @@ export EDITOR=nvim
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
