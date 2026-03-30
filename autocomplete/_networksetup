@@ -1,0 +1,57 @@
+#compdef networksetup
+
+_networksetup() {
+    local context state line
+    local -a services hardware_ports locations
+
+    # Helper to fetch network services
+    services=(${(f)"$(networksetup -listallnetworkservices | tail -n +2)"})
+    # Helper to fetch hardware ports/devices
+    hardware_ports=(${(f)"$(networksetup -listallhardwareports | awk -F': ' '/Device/ {print $2}')"})
+    # Helper to fetch locations
+    locations=(${(f)"$(networksetup -listlocations)"})
+
+    _arguments -C \
+        '(-listnetworkserviceorder)-listnetworkserviceorder[Display services with their corresponding hardware port and device name]' \
+        '(-listallnetworkservices)-listallnetworkservices[List all network services]' \
+        '(-listallhardwareports)-listallhardwareports[List all hardware ports and device names]' \
+        '(-detectnewhardware)-detectnewhardware[Detect new hardware and create default services]' \
+        '(-getmacaddress)-getmacaddress[View MAC address for a specific hardware port]:port:($hardware_ports)' \
+        '(-getcomputername)-getcomputername[Display the computer name]' \
+        '(-setcomputername)-setcomputername[Set the computer name]:name: ' \
+        '(-getinfo)-getinfo[Display IP, DNS, and proxy info for a service]:service:($services)' \
+        '(-setmanual)-setmanual[Set service to manual IP]:service:($services):IP: :subnet: :router: ' \
+        '(-setdhcp)-setdhcp[Set service to DHCP]:service:($services):clientid: ' \
+        '(-setbootp)-setbootp[Set service to BOOTP]:service:($services)' \
+        '(-setmanualwithdhcprouter)-setmanualwithdhcprouter[Set service to manual IP with DHCP router]:service:($services):IP: ' \
+        '(-getadditionalroutes)-getadditionalroutes[Get additional routes for service]:service:($services)' \
+        '(-setv4off)-setv4off[Turn IPv4 off for service]:service:($services)' \
+        '(-setv6off)-setv6off[Turn IPv6 off for service]:service:($services)' \
+        '(-setv6automatic)-setv6automatic[Set IPv6 to automatic for service]:service:($services)' \
+        '(-getdnsservers)-getdnsservers[Get DNS servers for service]:service:($services)' \
+        '(-setdnsservers)-setdnsservers[Set DNS servers for service]:service:($services):DNS IPs: ' \
+        '(-getsearchdomains)-getsearchdomains[Get search domains for service]:service:($services)' \
+        '(-setsearchdomains)-setsearchdomains[Set search domains]:service:($services):domains: ' \
+        '(-getwebproxy)-getwebproxy[Get HTTP proxy info]:service:($services)' \
+        '(-setwebproxystate)-setwebproxystate[Set HTTP proxy state]:service:($services):state:(on off)' \
+        '(-getsecurewebproxy)-getsecurewebproxy[Get HTTPS proxy info]:service:($services)' \
+        '(-setsecurewebproxystate)-setsecurewebproxystate[Set HTTPS proxy state]:service:($services):state:(on off)' \
+        '(-getairportnetwork)-getairportnetwork[Get current Wi-Fi network]:device:($hardware_ports)' \
+        '(-setairportpower)-setairportpower[Set Wi-Fi power]:device:($hardware_ports):state:(on off)' \
+        '(-getnetworkserviceenabled)-getnetworkserviceenabled[Check if service is enabled]:service:($services)' \
+        '(-setnetworkserviceenabled)-setnetworkserviceenabled[Set service enabled state]:service:($services):state:(on off)' \
+        '(-listlocations)-listlocations[List all locations]' \
+        '(-switchtolocation)-switchtolocation[Switch to a location]:location:($locations)' \
+        '(-version)-version[Display version]' \
+        '(-help)-help[Display help]' \
+        '(-printcommands)-printcommands[List all commands]' \
+        '*::args:->args'
+
+    case $state in
+        args)
+            # This catches complex multi-argument patterns if needed
+            ;;
+    esac
+}
+
+_networksetup "$@"
