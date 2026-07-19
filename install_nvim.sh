@@ -24,4 +24,9 @@ sudo rm -rf /usr/share/nvim
 sudo mv ./share/nvim /usr/share/
 sudo mv ./share/man/man1/nvim.1 /usr/share/man/man1/
 
+rm -rf nvim-linux-x86_64*
+
+mkdir -p ~/.config/nvim
+cp ./config/nvim/lazyvim.json ~/.config/nvim/lazyvim.json
+
 echo "Installation complete!"
