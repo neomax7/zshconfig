@@ -1,0 +1,98 @@
+[
+  {
+    "name": "cloudflare",
+    "vendor": "customendpoint",
+    "apiKey": "${input:chat.lm.secret.4d072454}",
+    "apiType": "chat-completions",
+    "models": [
+      {
+        "id": "@cf/moonshotai/kimi-k2.7-code",
+        "name": "kimi-k2.7-code",
+        "url": "https://api.cloudflare.com/client/v4/accounts/9ea1298a8431d6f5f9a83dacc15a288e/ai/v1",
+        "toolCalling": true,
+        "vision": true,
+        "thinking": true,
+        "contextWindow": 262144,
+        "maxInputTokens": 200000,
+        "maxOutputTokens": 62144
+      },
+      {
+        "id": "@cf/qwen/qwen3.8-27b",
+        "name": "qwen3.8-27b",
+        "url": "https://api.cloudflare.com/client/v4/accounts/9ea1298a8431d6f5f9a83dacc15a288e/ai/v1",
+        "toolCalling": true,
+        "vision": true,
+        "thinking": true,
+        "contextWindow": 262144,
+        "maxInputTokens": 200000,
+        "maxOutputTokens": 62144
+      },
+      {
+        "id": "@cf/google/gemma-4-26b-a4b-it",
+        "name": "gemma-4-26b",
+        "url": "https://api.cloudflare.com/client/v4/accounts/9ea1298a8431d6f5f9a83dacc15a288e/ai/v1",
+        "toolCalling": true,
+        "vision": true,
+        "thinking": true,
+        "contextWindow": 256000,
+        "maxInputTokens": 200000,
+        "maxOutputTokens": 56000
+      },
+      {
+        "id": "@cf/zai-org/glm-5.3-flash",
+        "name": "glm-5.3-flash",
+        "url": "https://api.cloudflare.com/client/v4/accounts/9ea1298a8431d6f5f9a83dacc15a288e/ai/v1",
+        "toolCalling": true,
+        "vision": true,
+        "thinking": true,
+        "maxInputTokens": 1000000,
+        "maxOutputTokens": 48576
+      },
+      {
+        "id": "@cf/zai-org/glm-5.3",
+        "name": "glm-5.3",
+        "url": "https://api.cloudflare.com/client/v4/accounts/9ea1298a8431d6f5f9a83dacc15a288e/ai/v1",
+        "toolCalling": true,
+        "vision": false,
+        "thinking": true,
+        "contextWindow": 148576,
+        "maxInputTokens": 1000000,
+        "maxOutputTokens": 48576
+      },
+
+      {
+        "id": "@cf/deepseek-ai/deepseek-v4-pro-0813",
+        "name": "deepseek-v4-pro",
+        "url": "https://api.cloudflare.com/client/v4/accounts/9ea1298a8431d6f5f9a83dacc15a288e/ai/v1",
+        "toolCalling": true,
+        "vision": false,
+        "thinking": true,
+        "contextWindow": 148576,
+        "maxInputTokens": 1000000,
+        "maxOutputTokens": 48576
+      },
+      {
+        "id": "@cf/deepseek-ai/deepseek-v4-flash-0731",
+        "name": "deepseek-v4-flash",
+        "url": "https://api.cloudflare.com/client/v4/accounts/9ea1298a8431d6f5f9a83dacc15a288e/ai/v1",
+        "toolCalling": true,
+        "vision": false,
+        "thinking": true,
+        "contextWindow": 1310720,
+        "maxInputTokens": 1000000,
+        "maxOutputTokens": 310720
+      },
+      {
+        "id": "@cf/nvidia/nemotron-3-120b-a12b",
+        "name": "nemotron-3-120b",
+        "url": "https://api.cloudflare.com/client/v4/accounts/9ea1298a8431d6f5f9a83dacc15a288e/ai/v1",
+        "toolCalling": true,
+        "vision": false,
+        "thinking": true,
+        "contextWindow": 256000,
+        "maxInputTokens": 200000,
+        "maxOutputTokens": 56000
+      }
+    ]
+  }
+]
